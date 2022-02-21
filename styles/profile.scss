@@ -1,0 +1,41 @@
+.profileContent {
+  margin-top: 30px;
+  .back {
+    margin-bottom: 40px;
+  }
+  .topInfo {
+    margin-bottom: 30px;
+    .avatar {
+      border-radius: 25%;
+    }
+    .textInfo {
+      .infoNames {
+        h3 {
+          color: #9a9a9a;
+        }
+      }
+      button {
+        font-size: 16px;
+        background: transparent;
+        color: cornflowerblue;
+        padding: 5px 10px;
+        border-radius: 30px;
+        transition: 0.3s;
+        border: 1px solid cornflowerblue;
+        &:hover {
+          background: #3660a8;
+          color: white;
+        }
+      }
+    }
+    .userState {
+      padding: 20px;
+      border-radius: 15px;
+      .stateItem {
+        h3 {
+          color: #9a9a9a;
+        }
+      }
+    }
+  }
+}

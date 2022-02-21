@@ -1,0 +1,42 @@
+.cardConversation {
+  padding: 20px 40px;
+  border-radius: 20px;
+  width: 410px;
+  .cardContent {
+    li {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .infoItem {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: grey;
+    }
+  }
+  .avatars {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    .avatarSingle {
+      width: 65px;
+      border-radius: 30%;
+      height: 65px;
+    }
+    .avatarEl {
+      position: absolute;
+      width: 45px;
+      height: 45px;
+      border-radius: 30%;
+    }
+    .avatarEl:first-child {
+      top: 0;
+      left: 0;
+    }
+    .avatarEl:last-child {
+      bottom: 0;
+      right: 0;
+      z-index: 2;
+    }
+  }
+}
