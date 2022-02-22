@@ -18,6 +18,8 @@ export default function AvatarStep() {
             headers: {"Content-Type": 'multipart/form-data'}
         }).then((res) => {
             setAvatar(res.data)
+        }).catch((e) => {
+            console.log(e)
         })
 
     }
@@ -41,7 +43,8 @@ export default function AvatarStep() {
         <div className="h-100v f-center-col">
             <StepWrapper className="bg-white flex-column al-center">
                 <h2>Please, choose your avatar</h2>
-                <img className={styles.avataImg} height={80} width={80} src={Avatar ? Avatar : 'static/img/primaryAvatar.png'} alt=""/>
+                <img className={styles.avataImg} height={80} width={80}
+                     src={Avatar ? Avatar : 'static/img/primaryAvatar.png'} alt=""/>
                 <div>
                     <label htmlFor="chooseAvatar" className={styles.chooseAvatarLabel}>Choose photo</label>
                     <input hidden id="chooseAvatar" type="file" ref={InputAvatar}/>

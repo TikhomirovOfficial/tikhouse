@@ -13,7 +13,6 @@ export default function AcceptCodeStep() {
     const nextDisabled = codes.some(value => !value)
     const router = useRouter();
     const {userData} = useContext(MainContext)
-    console.log(userData)
 
     const handleChangeCodes = e => {
         const index = Number(e.target.getAttribute('id')) - 1;

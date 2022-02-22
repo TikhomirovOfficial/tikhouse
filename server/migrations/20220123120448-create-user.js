@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      uuid: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+      },
       login: {
         type: Sequelize.STRING
       },
@@ -15,7 +20,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       isActive: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       phone: {
         type: Sequelize.STRING
