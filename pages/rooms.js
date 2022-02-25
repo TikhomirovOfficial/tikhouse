@@ -2,7 +2,6 @@ import Header from "../src/components/Header";
 import ConversationCard from "../src/components/ConversationCard";
 import {useEffect, useState} from "react";
 import axios from "../src/core/axios";
-import {log} from "util";
 import Link from "next/link";
 
 export default function Rooms({rooms = []}) {

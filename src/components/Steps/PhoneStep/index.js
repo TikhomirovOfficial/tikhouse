@@ -4,14 +4,22 @@ import styles from './phoneStep.module.scss'
 import NumberFormat from "react-number-format";
 import {useContext, useState} from "react";
 import {MainContext} from "../../../../pages";
+import {Axios} from "../../../core/axios";
 
 export default function PhoneStep() {
-    const {onNextStep, setFieldStep} = useContext(MainContext)
+    const {onNextStep, setFieldStep, userData} = useContext(MainContext)
     const [phoneValue, setPhoneValue] = useState({})
     const nextDisabled = phoneValue.formattedValue && !phoneValue.formattedValue.includes('_')
 
+    const sendUserData = () => {
+        Axios.post('/register', userData)
+            .then(res => {
+                console.log(res)
+            })
+    }
+
     const onClickNextStep = () => {
-        setFieldStep('phone', phoneValue.value)
+        sendUserData()
         onNextStep()
     }
     return (
@@ -23,7 +31,7 @@ export default function PhoneStep() {
                     className={styles.phoneNumber}
                     onValueChange={values => {
                         setPhoneValue(values)
-
+                        setFieldStep('phone', values.value)
                     }}
                     format="+# (###) ###-####"
                     placeholder="+7 (___) ___-____"

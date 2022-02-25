@@ -10,7 +10,7 @@ import AcceptCodeStep from "../src/components/Steps/AcceptCodeStep";
 export const MainContext = createContext({});
 
 export default function Welcome() {
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(4);
     const [userData, setUserData] = useState({})
 
     const onNextStep = () => {
@@ -31,7 +31,7 @@ export default function Welcome() {
         4: AcceptCodeStep
     };
     const Step = steps[step];
-
+    console.log(userData)
     return (
         <MainContext.Provider value={{onNextStep, userData, setUserData, setFieldStep}}>
            <Step/>

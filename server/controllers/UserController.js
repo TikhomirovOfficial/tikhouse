@@ -1,9 +1,14 @@
-class UserController {
-    async registration (req, res, next) {
-        try {
-            
-        } catch (e) {
+const UserService = require("../services/UserService")
 
+class UserController {
+    async registration (req, res) {
+        try {
+            const user = req.body
+            const userData = await UserService.registration(user)
+            res.cookie("refreshToken", userData.refreshToken, {maxAge: 1000*60*60*24*30, httpOnly:true})
+            return res.json(userData)
+        } catch (e) {
+            console.log(e)
         }
     }
     async login (req, res, next) {

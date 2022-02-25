@@ -1,18 +1,15 @@
 import Button from "../../Button";
 import StepWrapper from "../../StepWrapper";
 import styles from './acceptCode.module.scss'
-import {useContext, useState} from "react";
+import {useState} from "react";
 import clsx from "clsx";
 import {PreloaderProcess} from "../../PreloaderProcess";
-import axios from "../../../core/axios";
 import {useRouter} from "next/router";
-import {MainContext} from "../../../../pages";
 
 export default function AcceptCodeStep() {
     const [codes, setCodes] = useState(['', '', '', ''])
     const nextDisabled = codes.some(value => !value)
     const router = useRouter();
-    const {userData} = useContext(MainContext)
 
     const handleChangeCodes = e => {
         const index = Number(e.target.getAttribute('id')) - 1;
@@ -26,20 +23,15 @@ export default function AcceptCodeStep() {
             if (e.target.nextSibling) {
                 e.target.nextSibling.focus()
             }
-        } else {
+        }
+        else {
             e.target.value = codes[index]
         }
+
     }
 
     const submit = () => {
         setIsLoading(true)
-        axios.get('/todos')
-            .then(res => {
-                router.push('/rooms')
-            })
-            .catch(error => {
-                alert('Произошла ошибка')
-            })
     }
     const [isLoading, setIsLoading] = useState(false);
 
