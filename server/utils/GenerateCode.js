@@ -3,4 +3,4 @@ const generateCode = () => {
     if (code > 9999) generateCode()
     return code
 }
-module.exports = generateCode()
+module.exports = generateCode

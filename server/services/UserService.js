@@ -1,8 +1,7 @@
 const {User} = require("../models")
 const uuid = require('uuid-js')
-const smsService = require('./SMSservice')
+const SMSservice = require('./SMSservice')
 const tokenService = require('./TokenService')
-const generateCode = require('../utils/GenerateCode')
 const userDto = require('../dtos/UserDto')
 
 class UserService {
@@ -19,8 +18,8 @@ class UserService {
             avatar: user.avatar ? user.avatar : "sas"
         });
 
-        await smsService.sendActivationCode(user.phone, generateCode)
         const userData = new userDto(userCreated)
+        await SMSservice.sendActivationCode(userData)
 
         const tokens = tokenService.generateTokens(userData)
         await tokenService.saveToken(userData.id, tokens.refreshToken)
