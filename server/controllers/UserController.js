@@ -11,6 +11,16 @@ class UserController {
             console.log(e)
         }
     }
+    async activate (req, res) {
+        try {
+            const {phone, code} = req.body
+            const userActivated = await UserService.activate(phone, code)
+            return res.json(userActivated)
+
+        } catch (e) {
+
+        }
+    }
     async login (req, res, next) {
         try {
 

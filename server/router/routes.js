@@ -7,5 +7,6 @@ const router = new Router();
 
 router.post('/upload', uploader.single('photo'), UserController.uploadAvatar);
 router.post('/register', UserController.registration);
+router.post('/user/activate', UserController.activate)
 
 module.exports = router;

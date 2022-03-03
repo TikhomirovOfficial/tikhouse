@@ -42,7 +42,7 @@ export default function AcceptCodeStep() {
                     <PreloaderProcess textLoading='Please wait, verifying your phone...'/>
                     :
                     <StepWrapper className="bg-white flex-column al-center">
-                        <h2>Please enter the verification code</h2>
+
                         <div className="gap-10 f-center-row">
                             {
                                 [1, 2, 3, 4].map((index) => (

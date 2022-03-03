@@ -19,6 +19,13 @@ module.exports = {
       avatar: {
         type: Sequelize.STRING
       },
+      password: {
+        type: Sequelize.TEXT
+      },
+      verified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
