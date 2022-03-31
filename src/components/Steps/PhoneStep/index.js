@@ -38,7 +38,7 @@ export default function PhoneStep() {
                     mask="_"
                 />
                 <Button onClick={onClickNextStep} disabled={!nextDisabled}>
-                    Next
+                    Get code
                     <img width={20} src="static/img/arrow.svg" alt=""/>
                 </Button>
             </StepWrapper>

@@ -4,6 +4,7 @@ const cors = require('cors');
 const router = require('./router/routes')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const apiErrMiddleware = require('./middlewares/error-middleware')
 
 dotenv.config({
     path: `${__dirname}/.env`
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(cors())
 app.use(cookieParser())
 app.use('/api', router)
+app.use(apiErrMiddleware)
 
 app.listen(process.env.SERVER_PORT, () => {
     console.log('Server run on port', process.env.SERVER_PORT)

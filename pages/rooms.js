@@ -3,8 +3,11 @@ import ConversationCard from "../src/components/ConversationCard";
 import {useEffect, useState} from "react";
 import axios from "../src/core/axios";
 import Link from "next/link";
+import {Router} from "next/router";
+
 
 export default function Rooms({rooms = []}) {
+    console.log("bebebe")
     return (
         <>
             <Header/>
@@ -40,17 +43,29 @@ export default function Rooms({rooms = []}) {
 }
 
 export const getServerSideProps = async () => {
-    try {
-        const {data} = await axios.get('/rooms')
-        console.log('Worked')
+    if (!isAuth) {
         return {
-            props: {
-                rooms: data
-            }
-        }
-    } catch (e) {
-        return {
-            props: []
+            redirect: {
+                destination: '/'
+            },
         }
     }
+    return {
+        props: {
+            rooms: []
+        }
+    }
+    // try {
+    //     const {data} = await axios.get('/rooms')
+    //     console.log('Worked')
+    //     return {
+    //         props: {
+    //             rooms: data
+    //         }
+    //     }
+    // } catch (e) {
+    //     return {
+    //         props: []
+    //     }
+    // }
 }

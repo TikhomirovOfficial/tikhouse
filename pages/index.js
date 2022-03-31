@@ -13,8 +13,10 @@ export const MainContext = createContext({});
 
 export default function Welcome() {
 
-    const [userData, setUserData] = useState({})
+    const localstorageExist = typeof localStorage !== 'undefined';
+    const [userData, setUserData] = useState(localstorageExist ? JSON.parse(localStorage.getItem("signData")) || {} : {})
     const [step, setStep] = useState(0);
+
 
     const onNextStep = () => {
       setStep(prev => prev += 1)
@@ -25,6 +27,22 @@ export default function Welcome() {
            [field]: value
        }))
     }
+    useEffect(()=> {
+        if(Object.keys(userData).length) {
+            localStorage.setItem("signData", JSON.stringify(userData))
+        }
+    }, [userData])
+    useEffect(() => {
+        //const lenData = Object.keys(userData).length
+      setStep(()=> {
+          if(userData.phone || userData.password) {
+              return 4
+          }
+          if(userData.full_name) {
+              return 2
+          }
+      })
+    }, [])
 
     const steps = {
         0: WelcomeStep,
@@ -36,7 +54,7 @@ export default function Welcome() {
     };
 
     const Step = steps[step];
-    console.log(userData)
+
     return (
         <MainContext.Provider value={{onNextStep, userData, setUserData, setFieldStep}}>
            <Step/>
