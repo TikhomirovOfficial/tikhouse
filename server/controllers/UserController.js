@@ -6,12 +6,13 @@ class UserController {
             const user = req.body
             const userData = await UserService.registration(user)
             res.cookie("refreshToken", userData.refreshToken, {maxAge: 1000*60*60*24*30, httpOnly:true})
+            console.log("reg")
             return res.json(userData)
-
         } catch (e) {
             next(e)
         }
     }
+
     async activate (req, res, next) {
         try {
             const {phone, code} = req.body
@@ -22,6 +23,7 @@ class UserController {
             next(e)
         }
     }
+
     async login (req, res, next) {
         try {
             const {phone, password} = req.body
@@ -33,13 +35,35 @@ class UserController {
             next(e)
         }
     }
+
     async logout (req, res, next) {
         try {
+            const {refreshToken} = req.cookies
+            const token = await UserService.logout(refreshToken)
+            res.clearCookie('refreshToken')
+            return res.json(token)
 
         } catch (e) {
             next(e)
         }
     }
+
+    async refresh(req, res, next) {
+        try {
+            const {refreshToken} = req.cookies
+            const userData = await UserService.refresh(refreshToken)
+            return res.json(userData)
+
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getUsers(req, res, next) {
+        const users = await UserService.getAllUsers()
+        res.json(users)
+    }
+
     async uploadAvatar (req, res, next) {
         try {
             const file = req.file
@@ -47,6 +71,10 @@ class UserController {
         } catch (e) {
            return next(e)
         }
+    }
+
+    async getMe(req, res, next) {
+        res.json(req.user)
     }
 }
 

@@ -15,7 +15,7 @@ export default function Welcome() {
 
     const localstorageExist = typeof localStorage !== 'undefined';
     const [userData, setUserData] = useState(localstorageExist ? JSON.parse(localStorage.getItem("signData")) || {} : {})
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(0 );
 
 
     const onNextStep = () => {
@@ -32,16 +32,25 @@ export default function Welcome() {
             localStorage.setItem("signData", JSON.stringify(userData))
         }
     }, [userData])
-    useEffect(() => {
-        //const lenData = Object.keys(userData).length
-      setStep(()=> {
-          if(userData.phone || userData.password) {
-              return 4
-          }
-          if(userData.full_name) {
-              return 2
-          }
-      })
+
+    useEffect(() => {//ыфы
+        const lenData = Object.keys(userData).length
+        if (lenData) {
+            setStep(()=> {
+                if(localStorage.getItem('phone')) {
+                    return 5
+                }
+                if(userData.password) {
+                    return 4
+                }
+                if(userData.avatar) {
+                    return 3
+                }
+                if(userData.full_name) {
+                    return 1
+                }
+            })
+        }
     }, [])
 
     const steps = {

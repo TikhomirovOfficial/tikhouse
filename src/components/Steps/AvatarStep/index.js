@@ -3,7 +3,7 @@ import StepWrapper from "../../StepWrapper";
 import styles from './avatarStep.module.scss'
 import {useContext, useEffect, useRef, useState} from "react";
 import {MainContext} from "../../../../pages";
-import {Axios} from "../../../core/axios";
+import {Axios} from "../../../http/axios";
 
 export default function AvatarStep() {
     const {onNextStep, setFieldStep} = useContext(MainContext)

@@ -2,25 +2,28 @@ import Button from "../../Button";
 import StepWrapper from "../../StepWrapper";
 import styles from './phoneStep.module.scss'
 import NumberFormat from "react-number-format";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {MainContext} from "../../../../pages";
-import {Axios} from "../../../core/axios";
+import {useFetch} from "../../../hooks/useFetch";
+import Api from "../../../http/requests";
 
 export default function PhoneStep() {
-    const {onNextStep, setFieldStep, userData} = useContext(MainContext)
+    const {onNextStep, userData} = useContext(MainContext)
     const [phoneValue, setPhoneValue] = useState({})
     const nextDisabled = phoneValue.formattedValue && !phoneValue.formattedValue.includes('_')
+    const [error, setError] = useState("")
 
-    const sendUserData = () => {
-        Axios.post('/register', userData)
-            .then(res => {
-                console.log(res)
+
+    const onClickNextStep = async () => {
+        await Api.registration({...userData, phone: phoneValue.value})
+            .then((res) => {
+                if (res) {
+                    localStorage.setItem('phone', phoneValue.value)
+                    onNextStep()
+                }
+            }).catch((e) => {
+                setError(e.message)
             })
-    }
-
-    const onClickNextStep = () => {
-        sendUserData()
-        onNextStep()
     }
     return (
         <div className="h-100v f-center-col">
@@ -31,7 +34,6 @@ export default function PhoneStep() {
                     className={styles.phoneNumber}
                     onValueChange={values => {
                         setPhoneValue(values)
-                        setFieldStep('phone', values.value)
                     }}
                     format="+# (###) ###-####"
                     placeholder="+7 (___) ___-____"
@@ -42,6 +44,9 @@ export default function PhoneStep() {
                     <img width={20} src="static/img/arrow.svg" alt=""/>
                 </Button>
             </StepWrapper>
+            {
+                error ? <p style={{marginTop: 10, fontSize: 14, color: "red"}} className="txt-center">{error}</p> : null
+            }
         </div>
 
     )

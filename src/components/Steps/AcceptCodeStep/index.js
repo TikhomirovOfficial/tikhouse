@@ -5,11 +5,22 @@ import {useState} from "react";
 import clsx from "clsx";
 import {PreloaderProcess} from "../../PreloaderProcess";
 import {useRouter} from "next/router";
+import {useFetch} from "../../../hooks/useFetch";;
+import Api from "../../../http/requests";
 
 export default function AcceptCodeStep() {
     const [codes, setCodes] = useState(['', '', '', ''])
     const nextDisabled = codes.some(value => !value)
+    const userPhone = JSON.parse(localStorage.getItem('phone'))
+
+    const [sendCode, isLoading, error] = useFetch(async() => {
+        await Api.activateUser(userPhone, codes.join(''))
+        
+    })
+
+    console.log(error);
     const router = useRouter();
+
 
     const handleChangeCodes = e => {
         const index = Number(e.target.getAttribute('id')) - 1;
@@ -29,11 +40,6 @@ export default function AcceptCodeStep() {
         }
 
     }
-
-    const submit = () => {
-        setIsLoading(true)
-    }
-    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <div className="h-100v f-center-col">
@@ -57,7 +63,7 @@ export default function AcceptCodeStep() {
                                 ))
                             }
                         </div>
-                        <Button onClick={submit} disabled={nextDisabled}>
+                        <Button onClick={() => sendCode()} disabled={nextDisabled}>
                           Accept <img width={20} src="static/img/arrow.svg" alt=""/>
                         </Button>
                     </StepWrapper>

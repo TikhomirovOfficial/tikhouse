@@ -1,7 +1,7 @@
 import {useRouter} from "next/router";
 import Header from "../../src/components/Header";
 import Room from "../../src/components/Room";
-import axios from "../../src/core/axios";
+import axios from "../../src/http/axios";
 
 export default function RoomPage({room}) {
     return (

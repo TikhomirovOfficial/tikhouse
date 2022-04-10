@@ -15,11 +15,10 @@ class SMSservice {
             candidate.code = generateCode()
             return candidate.save()
         }
-        const codeCreated = await Code.create({
+        return await Code.create({
             user_id: user.id,
             code: generateCode()
         })
-        return codeCreated
     }
 }
 

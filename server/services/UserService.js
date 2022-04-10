@@ -30,7 +30,7 @@ class UserService {
             await tokenService.saveToken(userData.id, tokens.refreshToken)
             return {
                 ...userData,
-                tokens
+                ...tokens
             }
         }
         throw ApiError.BadRequest("Отсутсвуют необходимые поля!")
@@ -51,9 +51,44 @@ class UserService {
 
         return {
             ...userData,
-            tokens
+            ...tokens
         }
-        //LOGIN IS READY, CONTINUE OTHER FUNCS
+    }
+
+    async getAllUsers() {
+       return await User.findAll()
+    }
+
+    async refresh(token) {
+        if (!token) {
+            throw ApiError.UnauthorizedError()
+        }
+        const userData = tokenService.verifyRefreshToken(token)
+        const tokenExists = tokenService.tokenIsExists(token)
+
+        if(!userData || !tokenExists) {
+            throw ApiError.UnauthorizedError()
+        }
+
+        const user = await User.findOne({where: {id: userData.id}})
+        if (user) {
+            const userDTO = new userDto(user)
+            const tokens = tokenService.generateTokens(user)
+            await tokenService.saveToken(userData.id, tokens.refreshToken)
+
+            return {
+                ...userDTO,
+                ...tokens
+            }
+        }
+        throw ApiError.BadRequest("Пользователь не найден")
+    }
+
+    async logout (token) {
+        if (!token) {
+            throw ApiError.UnauthorizedError()
+        }
+        return tokenService.deleteToken(token)
     }
 
     async activate(phone, code) {
@@ -65,7 +100,7 @@ class UserService {
 
         if (codeCandidate && code === codeCandidate.code) {
             user.isActive = true
-            codeCandidate.destroy()
+            await codeCandidate.destroy()
             return user.save()
         }
         throw ApiError.BadRequest("Неверный код подтверждения!")

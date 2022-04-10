@@ -1,5 +1,5 @@
 import {useState} from "react";
-import axios from "../src/core/axios";
+import axios from "../src/http/axios";
 import StepWrapper from "../src/components/StepWrapper";
 import styles from "../src/components/Steps/PhoneStep/phoneStep.module.scss";
 import NumberFormat from "react-number-format";

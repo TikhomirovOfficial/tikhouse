@@ -5,9 +5,9 @@ import {useContext, useState} from "react";
 import {MainContext} from "../../../../pages";
 
 export default function InputNameStep () {
-    const [nameValue, setNameValue] = useState('')
+    const {onNextStep, setFieldStep, userData} = useContext(MainContext)
+    const [nameValue, setNameValue] = useState(userData.full_name || '')
     const nextDisabled = nameValue || nameValue.length >= 1
-    const {onNextStep, setFieldStep} = useContext(MainContext)
 
     const onClickNextStep = () => {
         setFieldStep('full_name', nameValue)

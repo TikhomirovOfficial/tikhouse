@@ -1,7 +1,7 @@
 import Header from "../src/components/Header";
 import ConversationCard from "../src/components/ConversationCard";
 import {useEffect, useState} from "react";
-import axios from "../src/core/axios";
+import axios from "../src/http/axios";
 import Link from "next/link";
 import {Router} from "next/router";
 
