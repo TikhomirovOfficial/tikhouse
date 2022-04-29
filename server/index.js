@@ -11,11 +11,15 @@ dotenv.config({
 })
 require('./core/db')
 
-const app = express();
 
-app.use(bodyParser.json());
-app.use(cors())
+const app = express();
 app.use(cookieParser())
+app.use(bodyParser.json());
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}))
+
 app.use('/api', router)
 app.use(apiErrMiddleware)
 

@@ -6,7 +6,7 @@ import AvatarStep from "../src/components/Steps/AvatarStep";
 import PhoneStep from "../src/components/Steps/PhoneStep";
 import AcceptCodeStep from "../src/components/Steps/AcceptCodeStep";
 import PasswordStep from "../src/components/Steps/PasswordStep";
-
+import { CheckAuth } from "../src/utils/checkAuth";
 
 
 export const MainContext = createContext({});
@@ -33,7 +33,7 @@ export default function Welcome() {
         }
     }, [userData])
 
-    useEffect(() => {//ыфы
+    useEffect(() => {
         const lenData = Object.keys(userData).length
         if (lenData) {
             setStep(()=> {
@@ -69,4 +69,18 @@ export default function Welcome() {
            <Step/>
         </MainContext.Provider>
     )
+}
+export const getServerSideProps = async (ctx) => {
+    const userLogged = await CheckAuth(ctx)
+    
+    if (userLogged) {
+        return {
+            redirect: {
+                destination: '/rooms'
+            },
+        }
+    }
+    return {
+        props: {}
+    }
 }

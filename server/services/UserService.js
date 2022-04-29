@@ -73,7 +73,7 @@ class UserService {
         const user = await User.findOne({where: {id: userData.id}})
         if (user) {
             const userDTO = new userDto(user)
-            const tokens = tokenService.generateTokens(user)
+            const tokens = tokenService.generateTokens(userDTO)
             await tokenService.saveToken(userData.id, tokens.refreshToken)
 
             return {
@@ -101,7 +101,9 @@ class UserService {
         if (codeCandidate && code === codeCandidate.code) {
             user.isActive = true
             await codeCandidate.destroy()
-            return user.save()
+            user.save()
+            const savedDTO = new userDto(user)
+            return {...savedDTO}
         }
         throw ApiError.BadRequest("Неверный код подтверждения!")
     }

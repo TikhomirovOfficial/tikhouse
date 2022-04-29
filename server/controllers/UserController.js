@@ -5,8 +5,6 @@ class UserController {
         try {
             const user = req.body
             const userData = await UserService.registration(user)
-            res.cookie("refreshToken", userData.refreshToken, {maxAge: 1000*60*60*24*30, httpOnly:true})
-            console.log("reg")
             return res.json(userData)
         } catch (e) {
             next(e)
@@ -28,7 +26,8 @@ class UserController {
         try {
             const {phone, password} = req.body
             const userData = await UserService.login(phone, password)
-            res.cookie("refreshToken", userData.refreshToken, {maxAge: 1000*60*60*24*30, httpOnly:true})
+            res.cookie("refreshToken", userData.refreshToken, {maxAge: 1000*60*60*24*30})
+            res.cookie("token", userData.accessToken, {maxAge: 1000*60*60*24*30})
             return res.json(userData)
 
         } catch (e) {
@@ -50,8 +49,11 @@ class UserController {
 
     async refresh(req, res, next) {
         try {
-            const {refreshToken} = req.cookies
+            const {refreshToken} = req.body
+            console.log(req.body);
             const userData = await UserService.refresh(refreshToken)
+            res.cookie("refreshToken", userData.refreshToken, {maxAge: 1000*60*60*24*30})
+            res.cookie("token", userData.accessToken, {maxAge: 1000*60*60*24*30})
             return res.json(userData)
 
         } catch (e) {
@@ -74,7 +76,8 @@ class UserController {
     }
 
     async getMe(req, res, next) {
-        res.json(req.user)
+        console.log("sas");
+        return res.json({sas: 30})
     }
 }
 

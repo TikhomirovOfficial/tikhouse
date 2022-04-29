@@ -17,7 +17,7 @@ export default function PhoneStep() {
     const onClickNextStep = async () => {
         await Api.registration({...userData, phone: phoneValue.value})
             .then((res) => {
-                if (res) {
+                if (res.data) {
                     localStorage.setItem('phone', phoneValue.value)
                     onNextStep()
                 }
