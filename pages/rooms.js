@@ -10,16 +10,11 @@ import Cookies from "nookies"
 import { cookieNext } from "../src/utils/cookieNext";
 
 
-export default function Rooms({rooms = []}) {
-    useEffect(async () => {
-       const user = await Api.getUser(AuthInstance())
-       console.log(user?.data);
-            
-    }, [])
-    
+export default function Rooms({user, rooms}) {
+    console.log(rooms)
     return (
         <>
-            <Header/>
+            <Header fullname={user.fullname}/>
             <div className="wrapper">
                 <div className="contentTop flex-row-betw">
                     <h1>All conversations</h1>
@@ -36,8 +31,8 @@ export default function Rooms({rooms = []}) {
                                         title={item.title}
                                         avatars={item.avatars}
                                         users={item.users}
-                                        messagesCount={item.messagesCount}
-                                        usersCount={item.usersCount}
+                                        messagesCount={item.speakers.length}
+                                        usersCount={item.listeners_count}
                                     />
                                 </a>
                             </Link>
@@ -52,7 +47,7 @@ export default function Rooms({rooms = []}) {
 export const getServerSideProps = async (ctx) => {
     
     const userLogged = await CheckAuth(ctx)
-    
+    const {data} = await Api.getRooms(ctx)
     if (!userLogged) {
         return {
             redirect: {
@@ -62,7 +57,9 @@ export const getServerSideProps = async (ctx) => {
     }
     return {
         props: {
-            rooms: [] 
+            user: userLogged.data,
+            rooms: data,
+
         }
     }
 }

@@ -2,27 +2,43 @@ import {useRouter} from "next/router";
 import Header from "../../src/components/Header";
 import Room from "../../src/components/Room";
 import axios from "../../src/http/axios";
+import Api from "../../src/http/requests";
+import {CheckAuth} from "../../src/utils/checkAuth";
+import {useState} from "react";
+import CreateRoomModal from "../../src/components/CreateRoomModal";
 
-export default function RoomPage({room}) {
+export default function RoomPage({user, room}) {
+    const [createRoomModalIsOpened, setCreateRoomModalIsOpened] = useState(false)
+    const handleCreateRoomModalIsOpened = () => setCreateRoomModalIsOpened(!createRoomModalIsOpened)
+
     return (
         <>
-            <Header/>
+            <Header fullname={user.fullname}/>
+            {
+                !createRoomModalIsOpened && <CreateRoomModal/>
+            }
             <Room title={room.title}/>
         </>
     )
 }
-export const getServerSideProps = async ({query}) => {
-    try {
-        const {data} = await axios.get(`/rooms/${query.room}`)
-        console.log(data)
+export const getServerSideProps = async (ctx) => {
+    const userLogged = await CheckAuth(ctx)
+    if (!userLogged) {
         return {
-            props: {
-                room: data
-            }
+            redirect: {
+                destination: '/auth'
+            },
         }
-    } catch (e) {
-        return {
-            props: []
+    }
+
+    const room_id = ctx.params.room
+    const {data} = await Api.getRoom(room_id, ctx)
+
+    return {
+        props: {
+            user: userLogged.data,
+            room: data,
+
         }
     }
 }

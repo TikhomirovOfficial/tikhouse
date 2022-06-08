@@ -41,6 +41,17 @@ export default class Api {
             context: ctx
         })
     }
+    static async getRooms(ctx) {
+        return await request('GET', '/rooms', null, {
+            context: ctx
+        })
+    }
+    static async getRoom(room_id, ctx) {
+        return await request('GET', `/rooms/${room_id}`, null, {
+            context: ctx
+        })
+    }
+
     static async getUser(instance) {
         return await request('GET', '/me', null, {
             instance: instance

@@ -50,7 +50,7 @@ class UserController {
     async refresh(req, res, next) {
         try {
             const {refreshToken} = req.body
-            console.log(req.body);
+            //console.log(req.body);
             const userData = await UserService.refresh(refreshToken)
             res.cookie("refreshToken", userData.refreshToken, {maxAge: 1000*60*60*24*30})
             res.cookie("token", userData.accessToken, {maxAge: 1000*60*60*24*30})
@@ -76,8 +76,7 @@ class UserController {
     }
 
     async getMe(req, res, next) {
-        console.log("sas");
-        return res.json({sas: 30})
+        return res.json(req.user)
     }
 }
 

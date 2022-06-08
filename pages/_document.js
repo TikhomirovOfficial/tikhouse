@@ -13,6 +13,7 @@ class MyDocument extends Document {
                     <title>ClubHouse</title>
                 </Head>
                 <body>
+
                     <Main/>
                     <NextScript/>
                 </body>

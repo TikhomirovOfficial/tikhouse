@@ -2,16 +2,16 @@ import styles from './conversationCard.module.scss'
 import clsx from "clsx";
 
 export default function ConversationCard({
-    title,
-    avatars = [],
-    users = [],
-    usersCount,
-    messagesCount
-    }) {
+                                             title,
+                                             avatars = [],
+                                             users = [],
+                                             usersCount,
+                                             messagesCount
+                                         }) {
     return (
         <div className={clsx('gap-20', 'bg-white', 'flex-column', styles.cardConversation)}>
             <h2>{title}</h2>
-            <div style={{flex: 0.9}} className="d-f gap-20">
+            <div style={{flex: 0.9}} className="flex-column gap-20">
                 <div className={styles.avatars}>
                     {
                         avatars.map((val, index) => (
@@ -32,14 +32,16 @@ export default function ConversationCard({
                             ))
                         }
                     </ul>
-                    <div className="d-f gap-15">
+                    <div className="d-f gap-30">
                         <div className={styles.infoItem}>
-                            {usersCount}
+
                             <img src="static/img/userIcon.svg" alt=""/>
+                            {usersCount}
                         </div>
                         <div className={styles.infoItem}>
-                            {messagesCount}
+
                             <img src="static/img/messageIcon.svg" alt=""/>
+                            {messagesCount}
                         </div>
                     </div>
                 </div>
