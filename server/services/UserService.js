@@ -56,7 +56,7 @@ class UserService {
     }
 
     async getAllUsers() {
-       return await User.findAll()
+        return await User.findAll()
     }
 
     async refresh(token) {

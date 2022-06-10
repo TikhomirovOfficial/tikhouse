@@ -1,6 +1,6 @@
 import Header from "../src/components/Header";
 import ConversationCard from "../src/components/ConversationCard";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 import {Router} from "next/router";
 import { AuthInstance } from "../src/http/authInstance";
@@ -8,17 +8,23 @@ import { CheckAuth } from "../src/utils/checkAuth";
 import Api from "../src/http/requests";
 import Cookies from "nookies"
 import { cookieNext } from "../src/utils/cookieNext";
+import CreateRoomModal from "../src/components/CreateRoomModal";
 
 
 export default function Rooms({user, rooms}) {
     console.log(rooms)
+    const [createRoomModalIsOpened, setCreateRoomModalIsOpened] = useState(false)
+    const handleCreateRoomModalIsOpened = () => setCreateRoomModalIsOpened(!createRoomModalIsOpened)
     return (
         <>
             <Header fullname={user.fullname}/>
+            {
+                createRoomModalIsOpened && <CreateRoomModal handleModal={handleCreateRoomModalIsOpened}/>
+            }
             <div className="wrapper">
                 <div className="contentTop flex-row-betw">
                     <h1>All conversations</h1>
-                    <div className="createRoom c-white fw-5 cur-pointer">
+                    <div onClick={handleCreateRoomModalIsOpened} className="createRoom c-white fw-5 cur-pointer">
                         + Start room
                     </div>
                 </div>

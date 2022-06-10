@@ -8,15 +8,12 @@ import {useState} from "react";
 import CreateRoomModal from "../../src/components/CreateRoomModal";
 
 export default function RoomPage({user, room}) {
-    const [createRoomModalIsOpened, setCreateRoomModalIsOpened] = useState(false)
-    const handleCreateRoomModalIsOpened = () => setCreateRoomModalIsOpened(!createRoomModalIsOpened)
+
 
     return (
         <>
             <Header fullname={user.fullname}/>
-            {
-                !createRoomModalIsOpened && <CreateRoomModal/>
-            }
+
             <Room title={room.title}/>
         </>
     )

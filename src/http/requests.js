@@ -1,5 +1,6 @@
 import {Axios} from "./axios";
 import Cookies from 'nookies'
+import {AuthInstance} from "./authInstance";
 
 const defualtInstance = Axios
 
@@ -51,7 +52,11 @@ export default class Api {
             context: ctx
         })
     }
-
+    static async createRoom(title) {
+        return await request('POST', '/rooms', {title: title}, {
+            instance: AuthInstance()
+        })
+    }
     static async getUser(instance) {
         return await request('GET', '/me', null, {
             instance: instance
